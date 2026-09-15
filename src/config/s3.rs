@@ -1,8 +1,8 @@
+use crate::error::s3::S3Error;
 use anyhow::Context;
+use s3::creds::Credentials;
 use s3::{Bucket, Region};
 use std::time::Duration;
-use s3::creds::Credentials;
-use crate::error::s3::S3Error;
 
 #[derive(Clone, Debug)]
 pub struct S3ClientConfig {
@@ -27,9 +27,16 @@ impl S3Config {
             endpoint: env::var("ENDPOINT").context("Set up ENDPOINT in .env")?,
             region: env::var("REGION_NAME").context("Set up REGION_NAME in .env")?,
             key_id: env::var("KEY_ID").context("Set up KEY_ID in .env")?,
-            application_key: env::var("APPLICATION_KEY").context("Set up APPLICATION_KEY in .env")?,
-            path_style: env::var("PATH_STYLE")?.parse::<bool>().context("Setup PATH_STYLE in .env")?,
-            request_timeout: Duration::from_secs(env::var("REQUEST_TIMEOUT")?.parse::<u64>().context("Invalid REQUEST_TIMEOUT")?)
+            application_key: env::var("APPLICATION_KEY")
+                .context("Set up APPLICATION_KEY in .env")?,
+            path_style: env::var("PATH_STYLE")?
+                .parse::<bool>()
+                .context("Setup PATH_STYLE in .env")?,
+            request_timeout: Duration::from_secs(
+                env::var("REQUEST_TIMEOUT")?
+                    .parse::<u64>()
+                    .context("Invalid REQUEST_TIMEOUT")?,
+            ),
         })
     }
 }
@@ -43,19 +50,21 @@ impl S3ClientConfig {
             Some(&s3_config.application_key.as_str()),
             None,
             None,
-            None
-        ).ok().unwrap_or(Credentials::default().unwrap());
+            None,
+        )
+        .ok()
+        .unwrap_or(Credentials::default().unwrap());
 
         let region: Region = s3_config.region.parse().context("Invalid region")?;
 
         let mut bucket = Bucket::new(&s3_config.bucket, region, credential)?;
-        
+
         if s3_config.path_style {
             bucket = bucket.with_path_style()
         }
-        
+
         bucket = bucket.with_request_timeout(s3_config.request_timeout)?;
 
-        Ok(Self { bucket: *bucket})
+        Ok(Self { bucket: *bucket })
     }
 }

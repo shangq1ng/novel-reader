@@ -1,11 +1,10 @@
-use std::env::VarError;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
+use std::env::VarError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum S3Error {
-
     #[error("EnvError: {0}")]
     EnvError(#[from] VarError),
 
@@ -25,12 +24,12 @@ impl IntoResponse for S3Error {
             Self::ObjectNotFound(e) => {
                 tracing::error!("Object not found: {}", e);
                 StatusCode::NOT_FOUND
-            },
+            }
             Self::S3(e) => {
                 tracing::error!("S3 Error: {e:?}");
                 StatusCode::INTERNAL_SERVER_ERROR
-            },
-            Self::Status {status, key} => {
+            }
+            Self::Status { status, key } => {
                 tracing::error!("Unexpected status {status} for {key}");
                 StatusCode::INTERNAL_SERVER_ERROR
             }

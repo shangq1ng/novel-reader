@@ -1,6 +1,6 @@
-use std::env::VarError;
 use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
+use std::env::VarError;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
@@ -18,11 +18,11 @@ impl IntoResponse for ConfigError {
             Self::MigrationError(err) => {
                 tracing::error!("Migration error: {}", err);
                 StatusCode::INTERNAL_SERVER_ERROR
-            },
+            }
             Self::EnvError(e) => {
                 tracing::error!("EnvError: {e:?}");
                 StatusCode::INTERNAL_SERVER_ERROR
-            },
+            }
         };
         config_error.into_response()
     }

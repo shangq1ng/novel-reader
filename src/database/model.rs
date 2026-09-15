@@ -1,6 +1,6 @@
 use sqlx::FromRow;
-use sqlx::types::chrono::{NaiveDateTime};
 use sqlx::types::Uuid;
+use sqlx::types::chrono::NaiveDateTime;
 
 #[derive(FromRow, Debug)]
 pub struct UserEntity {
@@ -34,4 +34,3 @@ pub struct ChaptersEntity {
     pub published_at: Option<NaiveDateTime>,
     pub created_at: NaiveDateTime,
 }
-
