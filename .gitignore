@@ -1,0 +1,18 @@
+# Rust
+/target
+**/*.rs.bk
+
+# Environment
+.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
