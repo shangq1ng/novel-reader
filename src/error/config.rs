@@ -33,4 +33,3 @@ impl IntoResponse for ConfigError {
         config_error.into_response()
     }
 }
-

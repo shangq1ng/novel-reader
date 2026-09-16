@@ -1,3 +1,4 @@
+pub mod entity;
 pub mod handler;
-pub mod model;
+pub mod models;
 pub mod services;

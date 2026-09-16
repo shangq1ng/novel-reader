@@ -10,7 +10,7 @@ pub enum SessionError {
     #[error(transparent)]
     TowerSessionRedisStoreError(#[from] tower_sessions_redis_store::fred::error::Error),
     #[error(transparent)]
-    InternalServerError(#[from] anyhow::Error)
+    InternalServerError(#[from] anyhow::Error),
 }
 
 impl IntoResponse for SessionError {

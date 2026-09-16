@@ -27,7 +27,7 @@ impl IntoResponse for S3Error {
             Self::UnexpectedError(e) => {
                 tracing::error!("Unexpected error: {e:?}");
                 StatusCode::INTERNAL_SERVER_ERROR
-            },
+            }
             Self::ObjectNotFound(e) => {
                 tracing::error!("Object not found: {}", e);
                 StatusCode::NOT_FOUND

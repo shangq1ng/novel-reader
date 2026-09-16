@@ -55,10 +55,20 @@ impl IntoResponse for AuthError {
     }
 }
 
-
-impl From<RequestTokenError<HttpClientError<reqwest::Error>, StandardErrorResponse<BasicErrorResponseType>>> for AuthError {
-    fn from(err: RequestTokenError<HttpClientError<reqwest::Error>, StandardErrorResponse<BasicErrorResponseType>>) -> Self {
+impl
+    From<
+        RequestTokenError<
+            HttpClientError<reqwest::Error>,
+            StandardErrorResponse<BasicErrorResponseType>,
+        >,
+    > for AuthError
+{
+    fn from(
+        err: RequestTokenError<
+            HttpClientError<reqwest::Error>,
+            StandardErrorResponse<BasicErrorResponseType>,
+        >,
+    ) -> Self {
         AuthError::InternalServerError(err.into())
     }
 }
-
