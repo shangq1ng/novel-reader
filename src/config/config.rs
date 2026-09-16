@@ -1,9 +1,7 @@
 use crate::error::config::ConfigError;
 use anyhow::Context;
-use s3::Bucket;
-use s3::creds::Credentials;
 use sqlx::postgres::{PgPool, PgPoolOptions};
-use std::sync::{Arc, RwLock};
+use std::sync::Arc;
 
 #[derive(Debug, Clone)]
 pub struct Config {
