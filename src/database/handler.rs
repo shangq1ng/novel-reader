@@ -26,15 +26,3 @@ pub async fn get_user(State(state): State<Config>) -> Result<Json<UserResponseDT
         None => Err(DbError::NotFound),
     }
 }
-
-pub async fn delete_user(
-    State(_state): State<Config>,
-    session: Session,
-) -> Result<StatusCode, AuthError> {
-    let _user: String = session
-        .get("authenticated_user")
-        .await?
-        .ok_or(AuthError::NotFound)?;
-
-    Ok(StatusCode::NO_CONTENT)
-}
