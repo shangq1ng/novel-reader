@@ -10,11 +10,17 @@ pub enum ConfigError {
     EnvError(#[from] VarError),
     #[error("Migration Error: {0}")]
     MigrationError(#[from] sqlx::migrate::MigrateError),
+    #[error(transparent)]
+    InternalServerError(#[from] anyhow::Error),
 }
 
 impl IntoResponse for ConfigError {
     fn into_response(self) -> Response {
         let config_error = match self {
+            Self::InternalServerError(e) => {
+                tracing::error!("Internal Server Error: {}", e);
+                StatusCode::INTERNAL_SERVER_ERROR
+            }
             Self::MigrationError(err) => {
                 tracing::error!("Migration error: {}", err);
                 StatusCode::INTERNAL_SERVER_ERROR
@@ -28,8 +34,3 @@ impl IntoResponse for ConfigError {
     }
 }
 
-impl From<anyhow::Error> for ConfigError {
-    fn from(err: anyhow::Error) -> Self {
-        err.into()
-    }
-}

@@ -46,8 +46,8 @@ impl S3ClientConfig {
         let s3_config = S3Config::from_env().await?;
 
         let credential = Credentials::new(
-            Some(&s3_config.key_id.as_str()),
-            Some(&s3_config.application_key.as_str()),
+            Some(s3_config.key_id.as_str()),
+            Some(s3_config.application_key.as_str()),
             None,
             None,
             None,

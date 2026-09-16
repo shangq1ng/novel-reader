@@ -1,5 +1,5 @@
 use crate::auth::models::{ProviderResponse, ProviderUserResponse};
-use crate::config::{auth::Client, config::Config};
+use crate::config::{auth::Client, configs::Config};
 use crate::error::auth::AuthError;
 use anyhow::Context;
 use axum::extract::{Query, State};
@@ -21,13 +21,13 @@ pub async fn google_client() -> Result<Client, AuthError> {
     let token_url = std::env::var("AUTH_TOKEN").context("Missing env var AUTH_TOKEN")?;
     let redirect_url = std::env::var("REDIRECT_URL").context("Missing env var redirect_URL")?;
 
-    let client = BasicClient::new(ClientId::new(client_id))
+    let google_client = BasicClient::new(ClientId::new(client_id))
         .set_client_secret(ClientSecret::new(client_secret))
         .set_auth_uri(AuthUrl::new(auth_url)?)
         .set_token_uri(TokenUrl::new(token_url)?)
         .set_redirect_uri(RedirectUrl::new(redirect_url)?);
 
-    Ok(client)
+    Ok(google_client)
 }
 
 pub async fn start_google_auth(

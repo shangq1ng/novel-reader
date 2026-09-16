@@ -16,11 +16,18 @@ pub enum S3Error {
 
     #[error("Unexpected status {status} for {key}")]
     Status { status: u16, key: String },
+
+    #[error(transparent)]
+    UnexpectedError(#[from] anyhow::Error),
 }
 
 impl IntoResponse for S3Error {
     fn into_response(self) -> Response {
         let error = match self {
+            Self::UnexpectedError(e) => {
+                tracing::error!("Unexpected error: {e:?}");
+                StatusCode::INTERNAL_SERVER_ERROR
+            },
             Self::ObjectNotFound(e) => {
                 tracing::error!("Object not found: {}", e);
                 StatusCode::NOT_FOUND
@@ -36,11 +43,5 @@ impl IntoResponse for S3Error {
             _ => StatusCode::BAD_REQUEST,
         };
         error.into_response()
-    }
-}
-
-impl From<anyhow::Error> for S3Error {
-    fn from(e: anyhow::Error) -> Self {
-        e.into()
     }
 }
