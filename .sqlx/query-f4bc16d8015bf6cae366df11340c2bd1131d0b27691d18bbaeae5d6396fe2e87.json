@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "SELECT sub, d_id, id, provider, username, display_name, email, created_at, avatar_url  FROM users",
+  "query": "SELECT sub, id, provider, username, display_name, email, created_at, avatar_url  FROM users",
   "describe": {
     "columns": [
       {
@@ -16,17 +16,6 @@
       },
       {
         "ordinal": 1,
-        "name": "d_id",
-        "type_info": "Text",
-        "origin": {
-          "Table": {
-            "table": "users",
-            "name": "d_id"
-          }
-        }
-      },
-      {
-        "ordinal": 2,
         "name": "id",
         "type_info": "Uuid",
         "origin": {
@@ -37,7 +26,7 @@
         }
       },
       {
-        "ordinal": 3,
+        "ordinal": 2,
         "name": "provider",
         "type_info": "Text",
         "origin": {
@@ -48,7 +37,7 @@
         }
       },
       {
-        "ordinal": 4,
+        "ordinal": 3,
         "name": "username",
         "type_info": "Text",
         "origin": {
@@ -59,7 +48,7 @@
         }
       },
       {
-        "ordinal": 5,
+        "ordinal": 4,
         "name": "display_name",
         "type_info": "Text",
         "origin": {
@@ -70,7 +59,7 @@
         }
       },
       {
-        "ordinal": 6,
+        "ordinal": 5,
         "name": "email",
         "type_info": "Text",
         "origin": {
@@ -81,7 +70,7 @@
         }
       },
       {
-        "ordinal": 7,
+        "ordinal": 6,
         "name": "created_at",
         "type_info": "Timestamptz",
         "origin": {
@@ -92,7 +81,7 @@
         }
       },
       {
-        "ordinal": 8,
+        "ordinal": 7,
         "name": "avatar_url",
         "type_info": "Text",
         "origin": {
@@ -107,16 +96,15 @@
       "Left": []
     },
     "nullable": [
-      true,
-      true,
       false,
       false,
       false,
-      true,
       false,
       false,
-      true
+      false,
+      false,
+      false
     ]
   },
-  "hash": "221ea5ba2e5ab09fdfdcf12f9e520af6d74a5bafa60b6dcc8f5371a0791f1f6c"
+  "hash": "f4bc16d8015bf6cae366df11340c2bd1131d0b27691d18bbaeae5d6396fe2e87"
 }
