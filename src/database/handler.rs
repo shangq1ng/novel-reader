@@ -5,12 +5,9 @@
 use crate::config::configs::Config;
 use crate::database::entity::UserEntity;
 use crate::database::models::UserResponseDTO;
-use crate::error::auth::AuthError;
 use crate::error::db::DbError;
 use axum::Json;
 use axum::extract::State;
-use axum::http::StatusCode;
-use tower_sessions::Session;
 
 pub async fn get_user(State(state): State<Config>) -> Result<Json<UserResponseDTO>, DbError> {
     let user = sqlx::query_as!(
