@@ -8,4 +8,4 @@
 
 # Works so far 
 - Google Oauth
-- Store / Retrieve User profile (Though, validations are yet to be implemented but testings are yet to be done and needs more security)
+- Store / Retrieve User profile in a naive manner.
